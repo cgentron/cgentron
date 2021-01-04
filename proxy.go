@@ -6,12 +6,10 @@ import (
 	"github.com/andersnormal/pkg/debug"
 	"github.com/andersnormal/pkg/server"
 	"github.com/spf13/cobra"
-
-	o "github.com/cgentron/protoc-gen-cgentron/pkg/opts"
 )
 
 type proxy struct {
-	opts     *o.Opts
+	opts     *Opts
 	cmd      *cobra.Command
 	listener Listener
 }
@@ -26,7 +24,7 @@ type Proxy interface {
 type Listener server.Listener
 
 // New ..
-func New(l Listener, opts *o.Opts) Proxy {
+func New(l Listener, opts *Opts) Proxy {
 	p := new(proxy)
 	p.opts = opts
 	p.listener = l
@@ -68,7 +66,7 @@ func (p *proxy) Start(ctx context.Context) error {
 
 // +private
 
-func configure(p *proxy, opts ...o.Opt) error {
+func configure(p *proxy, opts ...Opt) error {
 	for _, o := range opts {
 		o(p.opts)
 	}
